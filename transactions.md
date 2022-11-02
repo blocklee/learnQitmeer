@@ -299,27 +299,25 @@ curl -sku "qitmeer:qitmeer123" -X POST -H 'Content-Type: application/json' --dat
 至此，将 99.989 meer 从 evm地址转回到了主密钥地址 TnEvLExwzew6LPL13yXmWKnnZxD1c5Lr8Tw。
 
 
+ 
 
-~~有问题：  curl -sku "qitmeer:qitmeer123" -X POST -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"createRawTransaction","params":[[{"Txid":"a6f43bb66823053fb67bd3d42bfeb5a74e344985a8defe99fb9b12316ff0bcef", "Vout":1}], {"TnEvLExwzew6LPL13yXmWKnnZxD1c5Lr8Tw":90000000}],"id":1}' http://127.0.0.1:28131 | jq~~
+## TxTypeCrossChainExport（TX from MEER to EVM)
 
-https://47.111.233.176:28131
-http://127.0.0.1:28131
+ec-new = e2ec07936723d6b8c054f1f6bfe2cf1c439733303e5a6f0062d54168d9265b14.  
+text-addr = TnEvLExwzew6LPL13yXmWKnnZxD1c5Lr8Tw.  
+pkaddr = Mk6qZQSSAvHhrzZKVpdXSg1btFkkuNckAtWhfrQkwNgFab17zJE47.  
+evm-prv = 1c0f7568db440571712adf2e15e5c483eb939d8f509d0c00c9fd17da5beccd06.  
+text-child-meer = TnGRomDEyhLByhTcq9MYnvjDyU9ThyyQrNf. 
 
-### 继续造，又划转至evm，再回来
-
-ec-new = e2ec07936723d6b8c054f1f6bfe2cf1c439733303e5a6f0062d54168d9265b14
-text-addr = TnEvLExwzew6LPL13yXmWKnnZxD1c5Lr8Tw
-pkaddr = Mk6qZQSSAvHhrzZKVpdXSg1btFkkuNckAtWhfrQkwNgFab17zJE47
-evm-prv = 1c0f7568db440571712adf2e15e5c483eb939d8f509d0c00c9fd17da5beccd06
-text-child-meer = TnGRomDEyhLByhTcq9MYnvjDyU9ThyyQrNf
-
-- TxTypeCrossChainExport（TX from MEER to EVM)
+继续测试划转
 
 TnEvLExwzew6LPL13yXmWKnnZxD1c5Lr8Tw 总余额 99.989 meer，
 
 From UTXO: 04f6d4055fac1e17975f30e345ac8602c9fd4c54351c99af615273950fe43ee8 to MEER PKAddress Mk6qZQSSAvHhrzZKVpdXSg1btFkkuNckAtWhfrQkwNgFab17zJE47 9.9999 MEER coinID : 1 ETH
 
 Meer to EVM，coinID 为 1，类似把 meer 变成 eth。
+
+- 拆分金额测试
 
 ```bash
 ./qx tx-encode -v 1 -i 04f6d4055fac1e17975f30e345ac8602c9fd4c54351c99af615273950fe43ee8:0:4294967295:TxTypeCrossChainExport -l 0 -o Mk6qZQSSAvHhrzZKVpdXSg1btFkkuNckAtWhfrQkwNgFab17zJE47:9.9889:1:TxTypeCrossChainExport -o TnEvLExwzew6LPL13yXmWKnnZxD1c5Lr8Tw:90:0:TxTypeRegular
@@ -356,9 +354,12 @@ curl -sku "qitmeer:qitmeer123" -X POST -H 'Content-Type: application/json' --dat
     "code": -32000,
     "message": "Rule Error : Rejected transaction fb33616908402280cd607be72ca519275f467d5590f0ed2f758c9f526f885d20: failed to validate input fb33616908402280cd607be72ca519275f467d5590f0ed2f758c9f526f885d20:0 which references output {04f6d4055fac1e17975f30e345ac8602c9fd4c54351c99af615273950fe43ee8 0} - verify failed (input script bytes 47304402205e5bdcc645215357c86ad5b89b78c2036706efb28a873ae09c5ca994654f1fac02202c5b78ac80baf50f32d257275a5bea30197ca53820503d4b7c19c7433af1eae701, prev output script bytes 76a9142421972d46cedd2283d244665a05bde2aec3446f88ac)"
   }
-} ???
+} 
 
 ```
+划转拆分测试失败
+
+- 全额划转测试
 
 
 
